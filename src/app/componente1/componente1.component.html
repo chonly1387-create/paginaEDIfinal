@@ -1,0 +1,56 @@
+<div class="contenedor">
+
+  <h1>Sistema de Turnos</h1>
+
+  <!-- TABLA -->
+  <table>
+
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Telefono</th>
+      <th>Fecha</th>
+      <th>Hora</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let turno of turnos"  (click)="seleccionarTurno(turno)">
+      <td>{{turno.id}}</td>
+      <td>{{turno.nombre}}</td>
+      <td>{{turno.apellido}}</td>
+      <td>{{turno.telefono}}</td>
+      <td>{{turno.fecha}}</td>
+      <td>{{turno.hora}}</td>
+      <td>{{turno.estado}}</td>
+    </tr>
+  </tbody>
+
+  </table>
+  <!-- FORMULARIO -->
+  <div class="formulario">
+
+    <input type="text" [(ngModel)]="turno.nombre" placeholder="Nombre">
+
+    <input type="text" [(ngModel)]="turno.apellido" placeholder="Apellido">
+
+    <input type="text" [(ngModel)]="turno.telefono" placeholder="Telefono">
+
+    <input type="date" [(ngModel)]="turno.fecha">
+
+    <input type="time" [(ngModel)]="turno.hora">
+
+    <input type="text" [(ngModel)]="turno.estado" placeholder="Estado">
+
+    <div class="botones">
+      <button (click)="crearTurno()">Crear</button>
+      <button (click)="modificarTurno()">Modificar</button>
+      <button (click)="eliminarTurno()">Eliminar</button>
+    </div>
+
+  </div>
+
+</div>
