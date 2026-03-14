@@ -1,0 +1,178 @@
+from flask import Flask,request,jsonify
+from flask_cors import CORS
+import mysql.connector
+
+app = Flask(__name__)
+CORS(app)
+
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="jose1jose",
+    database="edi3")
+
+#obtener turnos
+@app.route('/api/turnos',methods=['GET'])
+def get_turnos():
+    cursor = db.cursor(dictionary=True)
+
+    sql = """
+        SELECT 
+            t.id,
+            c.nombre,
+            c.apellido,
+            t.telefono,
+            t.fecha,
+            t.hora,
+            t.estado,
+            t.id_cliente_turnos
+        FROM turnos t
+        JOIN clientes c ON t.id_cliente_turnos = c.id_cliente
+        """
+
+    cursor.execute(sql)
+    result = cursor.fetchall()
+
+    for r in result:
+        if r["hora"]:
+            r["hora"] = str(r["hora"])
+
+    return jsonify(result)
+
+#obtener un turno
+@app.route('/api/turnos/<int:id>',methods=['GET'])
+def get_turno(id):
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM turnos where id=%s",(id,))
+    result = cursor.fetchone()
+    return jsonify(result)
+
+#crear turno
+@app.route('/api/turnos',methods=['POST'])
+def create_turno():
+    data = request.json
+
+
+
+    fecha = data['fecha']
+    hora = data['hora']
+    estado = data['estado']
+    id_cliente_turnos = data['id_cliente_turnos']
+    cursor = db.cursor()
+
+    sql = """ INSERT INTO turnos(id_cliente_turnos,fecha,hora,estado)
+    VALUES (%s,%s,%s,%s)"""
+
+    cursor.execute(sql,(id_cliente_turnos,fecha,hora,estado))
+    db.commit()
+
+    return jsonify({"mensaje":"turno creado"})
+
+#modificar turnos
+@app.route('/api/turnos/<int:id>',methods=['PUT'])
+def update_turno(id):
+    data = request.json
+    cursor = db.cursor()
+
+    sql="""UPDATE turnos SET
+    fecha=%s,hora=%s,estado=%s,id_cliente_turnos=%s WHERE id=%s"""
+
+    cursor.execute(sql,(
+
+
+        data['fecha'],
+        data['hora'],
+        data['estado'],
+        data['id_cliente_turnos'],
+        id
+    ))
+
+    db.commit()
+    return jsonify({"mensaje":"turno actualizado"})
+
+#eliminar turno
+@app.route('/api/turnos/<int:id>',methods=['DELETE'])
+def delete_turno(id):
+    cursor = db.cursor()
+
+    cursor.execute("DELETE FROM turnos WHERE id=%s",(id,))
+    db.commit()
+    return jsonify({"mensaje":"turno eliminado"})
+
+#------------------------------------------------
+#-------------------------------------------------
+#--------------------------------------------------
+#--------------------------------------------------
+#obtener clientes
+@app.route('/api/clientes',methods=['GET'])
+def get_clientes():
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM clientes")
+    result = cursor.fetchall()
+
+
+    return jsonify(result)
+
+#obtener un clientes
+@app.route('/api/clientes/<int:id>',methods=['GET'])
+def get_cliente(id):
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM clientes where id_cliente=%s",(id,))
+    result = cursor.fetchone()
+    return jsonify(result)
+
+#crear clientes
+@app.route('/api/clientes',methods=['POST'])
+def create_clientes():
+    data = request.json
+
+    nombre = data['nombre']
+    apellido = data['apellido']
+    fecha_registro = data['fecha_registro']
+
+
+    cursor = db.cursor()
+
+    sql = """ INSERT INTO clientes(nombre
+    ,apellido,fecha_registro)
+    VALUES (%s,%s,%s)"""
+
+    cursor.execute(sql,(nombre,apellido,fecha_registro))
+    db.commit()
+
+    return jsonify({"mensaje":"clientes creado"})
+
+#modificar clientes
+@app.route('/api/clientes/<int:id>',methods=['PUT'])
+def update_clientes(id):
+    data = request.json
+    cursor = db.cursor()
+
+    sql="""UPDATE clientes SET nombre=%s,apellido=%s,
+    fecha_registro=%s WHERE id_cliente=%s"""
+
+    cursor.execute(sql,(
+        data['nombre'],
+        data['apellido'],
+        data['fecha_registro'],
+        id
+    ))
+
+    db.commit()
+    return jsonify({"mensaje":"cliente actualizado"})
+
+#eliminar clientes
+@app.route('/api/clientes/<int:id>',methods=['DELETE'])
+def delete_cliente(id):
+    cursor = db.cursor()
+
+    cursor.execute("DELETE FROM clientes WHERE id_cliente=%s",(id,))
+    db.commit()
+    return jsonify({"mensaje":"cliente eliminado"})
+
+
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

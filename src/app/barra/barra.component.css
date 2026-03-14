@@ -1,70 +1,38 @@
-.container {
-  display: flex;
-  height: 100vh;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  background: #f1f5f9;
+
+/* barra superior */
+.navbar{
+  background:#1f1f1f;
+  color:white;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 40px;
+  margin-top:0;
+  position:relative;
+  top:0;
 }
 
-/* SIDEBAR */
-.sidebar {
-  width: 240px;
-  background: linear-gradient(180deg, #020617, #0f172a);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 16px;
-  box-shadow: 4px 0 10px rgba(0,0,0,0.2);
+/* titulo */
+.logo{
+  font-size:20px;
+  font-weight:bold;
 }
 
-/* LOGO */
-.logo {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 30px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* contenedor de links */
+.menu a{
+  color:white;
+  text-decoration:none;
+  margin-left:20px;
+  font-size:16px;
+  transition:0.3s;
 }
 
-/* MENU */
-.menu {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+/* efecto cuando pasas el mouse */
+.menu a:hover{
+  color:#4CAF50;
 }
 
-.menu a {
-  color: #e5e7eb;
-  text-decoration: none;
-  padding: 10px 14px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  font-size: 14px;
-}
-
-/* HOVER */
-.menu a:hover {
-  background: #1e293b;
-  padding-left: 20px;
-}
-
-/* ACTIVO */
-.menu a.active {
-  background: #2563eb;
-  color: white;
-  font-weight: 600;
-}
-
-/* CONTENIDO */
-.content {
-  flex: 1;
-  padding: 24px;
-  overflow-y: auto;
-}
-
-/* FOOTER */
-.footer {
-  margin-top: auto;
-  text-align: center;
-  color: #94a3b8;
+/* contenido */
+.contenido{
+  padding:30px;
 }

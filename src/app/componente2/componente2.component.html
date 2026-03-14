@@ -1,1 +1,27 @@
-<p>componente2 works!</p>
+<div class="contenedor">
+
+  <h1>Turnos de Hoy</h1>
+
+  <!-- TABLA -->
+  <table>
+
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Cliente</th>
+
+      <th>Fecha</th>
+      <th>Hora</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let turno of turnos">
+      <td>{{turno.id}}</td>
+      <td>{{turno.nombre}} {{turno.apellido}}</td>
+      <td>{{turno.fecha | date:'dd/MM/yyyy'}}</td>
+      <td>{{turno.hora}}</td>
+      <td>{{turno.estado}}</td>
+    </tr>
+  </tbody>

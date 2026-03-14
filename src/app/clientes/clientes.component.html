@@ -1,0 +1,50 @@
+
+<div class="contenedor">
+
+  <h1>Clientes</h1>
+
+  <!-- TABLA -->
+  <table>
+
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Fecha De Registro</th>
+      
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let cliente of clientes"  (click)="seleccionarTurno(cliente)">
+      <td>{{cliente.id_cliente}}</td>
+      <td>{{cliente.nombre}}</td>
+      <td>{{cliente.apellido}}</td>
+      <td>{{cliente.fecha_registro | date:'dd/MM/yyyy'}}</td>
+      
+    </tr>
+  </tbody>
+
+  </table>
+  <!-- FORMULARIO -->
+  <div class="formulario">
+
+    <input type="text" [(ngModel)]="cliente.nombre" placeholder="Nombre">
+
+    <input type="text" [(ngModel)]="cliente.apellido" placeholder="Apellido">
+
+    <input type="date" [(ngModel)]="cliente.fecha_registro">
+
+
+   
+
+    <div class="botones">
+      <button (click)="crearCliente()">Crear</button>
+      <button (click)="modificarCliente()">Modificar</button>
+      <button (click)="eliminarCliente()">Eliminar</button>
+    </div>
+
+  </div>
+
+</div>

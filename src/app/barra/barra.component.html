@@ -1,10 +1,19 @@
-<h2>Menu</h2>
+<header class="navbar">
 
-<a routerLink="/1">Componente 1</a>
-<a routerLink="/2">Componente 2</a>
+  <div class="logo">
+    Sistema de Turnos
+  </div>
 
-<hr>
+  <nav class="menu">
+    <a routerLink="/1">Gestionar Turnos</a>
+    <a routerLink="/2">Turnos de hoy</a>
+    <a routerLink="/3">Gestionar Clientes</a>
+  </nav>
 
-<router-outlet></router-outlet>
+</header>
+
+<main class="contenido">
+  <router-outlet></router-outlet>
+</main>
 
 <app-footer></app-footer>

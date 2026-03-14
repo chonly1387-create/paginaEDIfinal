@@ -17,17 +17,21 @@ export class Componente1Component {
     id:0,
     nombre:'',
     apellido:'',
-    telefono:'',
     fecha:'',
     hora:'',
-    estado:'pendiente'
+    estado:'pendiente',
+    id_cliente_turnos:null
   };
   
   constructor(private servicio: ServicioService){}
 
   ngOnInit(){
     this.cargarTurnos();
+    this.limpiarCajas();
   }
+
+  
+
 
   cargarTurnos(){
     this.servicio.getAll("turnos").subscribe(data=>{
@@ -70,19 +74,27 @@ export class Componente1Component {
     this.turno.id = t.id;
     this.turno.nombre = t.nombre;
     this.turno.apellido = t.apellido;
-    this.turno.telefono = t.telefono;
-    this.turno.fecha = t.fecha;
+    
+    this.turno.fecha = new Date(t.fecha).toISOString().split('T')[0]; // 👈 solución
     this.turno.hora = t.hora;
     this.turno.estado = t.estado;
+    this.turno.id_cliente_turnos = t.id_cliente_turnos
     //copia todo a la lista turno para ponerlo en los entrys despues
 }
   limpiarCajas(){
+
+    const ahora = new Date();
+
+    const fecha = ahora.toISOString().split('T')[0]; // yyyy-mm-dd
+    const hora = ahora.toTimeString().slice(0,5);    // hh:mm
+    
     this.turno.id = 0;
     this.turno.nombre = "";
     this.turno.apellido = "";
-    this.turno.telefono = 0;
-    this.turno.fecha = 0;
-    this.turno.hora = 0;
-    this.turno.estado = 0;
+   
+    this.turno.fecha = ahora.toISOString().split('T')[0]; // fecha actual
+    this.turno.hora = ahora.toTimeString().slice(0,5); // hora actual HH:mm
+    this.turno.estado = "pendiente";
+    this.turno.id_cliente_turnos = null;
   }
 }

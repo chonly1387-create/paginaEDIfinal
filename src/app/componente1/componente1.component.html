@@ -8,24 +8,22 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Nombre</th>
-      <th>Apellido</th>
-      <th>Telefono</th>
       <th>Fecha</th>
       <th>Hora</th>
       <th>Estado</th>
+      <th>Cliente</th>
     </tr>
   </thead>
 
   <tbody>
     <tr *ngFor="let turno of turnos"  (click)="seleccionarTurno(turno)">
       <td>{{turno.id}}</td>
-      <td>{{turno.nombre}}</td>
-      <td>{{turno.apellido}}</td>
-      <td>{{turno.telefono}}</td>
-      <td>{{turno.fecha}}</td>
+      
+      <td>{{turno.fecha | date:'dd/MM/yyyy'}}</td>
       <td>{{turno.hora}}</td>
       <td>{{turno.estado}}</td>
+      <td>{{turno.nombre}} {{turno.apellido}}</td>
+      
     </tr>
   </tbody>
 
@@ -33,18 +31,20 @@
   <!-- FORMULARIO -->
   <div class="formulario">
 
-    <input type="text" [(ngModel)]="turno.nombre" placeholder="Nombre">
-
-    <input type="text" [(ngModel)]="turno.apellido" placeholder="Apellido">
-
-    <input type="text" [(ngModel)]="turno.telefono" placeholder="Telefono">
-
+  
     <input type="date" [(ngModel)]="turno.fecha">
 
     <input type="time" [(ngModel)]="turno.hora">
 
-    <input type="text" [(ngModel)]="turno.estado" placeholder="Estado">
-
+    <input type="text" [(ngModel)]="turno.id_cliente_turnos" placeholder="ID cliente">
+    <div>
+      <label >Estado:</label>
+      <select [(ngModel)]="turno.estado">
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+          <option value="pendiente">Pendiente</option>
+      </select>
+    </div>  
     <div class="botones">
       <button (click)="crearTurno()">Crear</button>
       <button (click)="modificarTurno()">Modificar</button>
